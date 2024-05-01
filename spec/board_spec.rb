@@ -53,7 +53,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
 
   describe '#create_player' do
     # located inside #update_players
-    # Method with outgoing command -> test that a message has been sent.
+    # Method with outgoing command, test that a message has been sent.
     context 'When creating players:' do
       let(:test_player) { 'mayo' }
 
@@ -67,5 +67,30 @@ describe Board do # rubocop: disable Metrics/BlockLength
   describe '#input_name' do
     # located inside #update_players
     # Only contain puts and gets
+  end
+
+  describe '#game_loop' do
+    # located inside #play
+    # Looping Script Method, behavior should be tested.
+    # test for loop end condition: game_won?
+    context 'When game_won? is false once' do
+      before do
+        allow(game).to receive(:game_won?).and_return(false, true)
+      end
+      it 'Calls #display_turn_order once' do
+        expect(game).to receive(:display_turn_order).once
+        game.game_loop
+      end
+    end
+
+    context 'When game_won? is false 4 times' do
+      before do
+        allow(game).to receive(:game_won?).and_return(false, false, false, false, true)
+      end
+      it 'Calls #display_turn_order 4 times' do
+        expect(game).to receive(:display_turn_order).exactly(4).times
+        game.game_loop
+      end
+    end
   end
 end

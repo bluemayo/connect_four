@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'display'
 require_relative 'player'
 
 # Defines the board of connect four
 class Board
-  include Display
-
   def initialize(player1 = nil, player2 = nil)
     @player1 = player1
     @player2 = player2
@@ -15,6 +12,7 @@ class Board
 
   def play
     update_players
+    game_loop
   end
 
   def update_players
@@ -24,6 +22,12 @@ class Board
     end
   end
 
+  def game_loop
+    display_turn_order until game_won?
+  end
+
+  # private
+
   def create_player(name)
     Player.new(name)
   end
@@ -32,4 +36,8 @@ class Board
     print "Enter Player#{player_number} Name: "
     gets.chomp
   end
+
+  def display_turn_order; end
+
+  def game_won?; end
 end
