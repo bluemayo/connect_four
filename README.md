@@ -1,1 +1,1 @@
-# connect_four
+Connect Four game in ruby played on the Command Line, part of The Odin Project.
