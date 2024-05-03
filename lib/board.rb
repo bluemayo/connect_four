@@ -37,7 +37,16 @@ class Board
     gets.chomp
   end
 
-  def display_turn_order; end
+  def display_turn_order
+    update_choice(@player1.make_choice)
+    display_board
+    return if game_won?
+
+    update_choice(@player2.make_choice)
+    display_board
+  end
 
   def game_won?; end
+
+  def update_choice(choice); end
 end

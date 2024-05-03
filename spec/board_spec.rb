@@ -3,7 +3,7 @@
 require_relative '../lib/board'
 
 # This file tests the methods in the Board class
-describe Board do # rubocop: disable Metrics/BlockLength
+describe Board do
   # generic Board object
   subject(:game) { described_class.new }
 
@@ -23,7 +23,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
       allow(game).to receive(:input_name)
     end
 
-    context 'Loops twice' do
+    context 'When looping twice' do
       it 'Calls #input_name twice' do
         expect(game).to receive(:input_name).twice
         game.update_players
@@ -35,7 +35,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
       end
     end
 
-    context 'Player variables updated' do
+    context 'When Player variables' do
       # create method stub for #create_player to return fake values
       before do
         allow(game).to receive(:create_player).and_return('mayo', 'tddman')
@@ -90,6 +90,46 @@ describe Board do # rubocop: disable Metrics/BlockLength
       it 'Calls #display_turn_order 4 times' do
         expect(game).to receive(:display_turn_order).exactly(4).times
         game.game_loop
+      end
+    end
+  end
+
+  describe '#display_turn_order' do
+    # located inside #game_loop
+    # Both a Outgoing Command and Script Method, test that messages have been sent
+
+    # Create new subject and instance double and method stubs for them
+    let(:test_player) { instance_double(Player) }
+    subject(:game_order) { described_class.new(test_player, test_player) }
+    context 'When both players have turns' do
+      before do
+        allow(test_player).to receive(:make_choice).and_return([0, 0])
+        allow(game_order).to receive(:update_choice)
+        allow(game_order).to receive(:game_won?).and_return(false)
+      end
+      it 'Calls #make_choice twice' do
+        expect(test_player).to receive(:make_choice).twice
+        game_order.display_turn_order
+      end
+      it 'Calls #update_choice twice' do
+        expect(game_order).to receive(:update_choice).with([0, 0]).twice
+        game_order.display_turn_order
+      end
+    end
+
+    context 'When only player1 made choice' do
+      before do
+        allow(test_player).to receive(:make_choice).and_return([0, 0])
+        allow(game_order).to receive(:update_choice)
+        allow(game_order).to receive(:game_won?).and_return(true)
+      end
+      it 'Calls #make_choice once' do
+        expect(test_player).to receive(:make_choice).once
+        game_order.display_turn_order
+      end
+      it 'Calls #update_choice once' do
+        expect(game_order).to receive(:update_choice).with([0, 0]).once
+        game_order.display_turn_order
       end
     end
   end
