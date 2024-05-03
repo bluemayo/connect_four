@@ -7,7 +7,7 @@ class Board
   def initialize(player1 = nil, player2 = nil)
     @player1 = player1
     @player2 = player2
-    @board = Array.new(7).map { Array.new(6) }
+    @board = Array.new(7).map { Array.new }
   end
 
   def play
@@ -38,15 +38,19 @@ class Board
   end
 
   def display_turn_order
-    update_choice(@player1.make_choice)
+    update_choice(@player1.make_choice, 'X')
     display_board
     return if game_won?
 
-    update_choice(@player2.make_choice)
+    update_choice(@player2.make_choice, 'O')
     display_board
   end
 
   def game_won?; end
 
-  def update_choice(choice); end
+  def update_choice(choice, symbol)
+    @board[choice] << symbol
+  end
+
+  def display_board; end
 end
