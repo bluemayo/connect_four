@@ -6,5 +6,8 @@ class Player
     @name = name
   end
 
-  def make_choice; end
+  def make_choice
+    print "#{@name}, please pick your row from 1-7: "
+    gets.chomp.to_i
+  end
 end
