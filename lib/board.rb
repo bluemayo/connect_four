@@ -7,7 +7,6 @@ class Board
   def initialize(player1 = nil, player2 = nil)
     @player1 = player1
     @player2 = player2
-    @board = Array.new(7).map { Array.new }
   end
 
   def play
@@ -49,7 +48,7 @@ class Board
   def game_won?; end
 
   def update_choice(choice, symbol)
-    @board[choice] << symbol
+    @board[choice - 1] << symbol
   end
 
   def display_board; end

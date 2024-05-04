@@ -139,11 +139,11 @@ describe Board do
     # Command Method, test if state has been changed.
     context 'When updating board' do
       it 'Updates the correct column with correct symbol' do
-        expect { game.update_choice(0, 'X') }.to change { game.instance_variable_get(:@board).first.first }.to eq('X')
+        expect { game.update_choice(1, 'X') }.to change { game.instance_variable_get(:@board).first.first }.to eq('X')
       end
       it 'Updates in the correct row with correct symbol' do
-        game.update_choice(0, 'X')
-        expect { game.update_choice(0, 'O') }.to change { game.instance_variable_get(:@board).first[1] }.to eq('O')
+        game.update_choice(1, 'X')
+        expect { game.update_choice(1, 'O') }.to change { game.instance_variable_get(:@board).first[1] }.to eq('O')
       end
     end
   end

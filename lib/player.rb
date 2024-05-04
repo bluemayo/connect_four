@@ -2,8 +2,9 @@
 
 # Defines a player in the connect four game
 class Player
-  def initialize(name)
+  def initialize(name, head_piece = nil)
     @name = name
+    @head = head_piece
   end
 
   def make_choice
