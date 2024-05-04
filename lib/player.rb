@@ -2,17 +2,6 @@
 
 require_relative 'piece'
 
-CONNECTIONS = [
-  [-1, -1],
-  [-1, 0],
-  [-1, 1],
-  [0, -1],
-  [0, 1],
-  [1, -1],
-  [1, 0],
-  [1, 1]
-]
-
 # Defines a player in the connect four game
 class Player
   def initialize(name, pieces = [])

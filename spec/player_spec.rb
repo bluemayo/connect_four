@@ -22,7 +22,7 @@ describe Player do
         expect(Piece).to receive(:new).once
         player.update_choice(1)
       end
-      it 'Calls #update_connected once' do
+      it 'Calls #connected once' do
         expect(player).to receive(:connected).once
         player.update_choice(1)
       end
@@ -37,7 +37,6 @@ describe Player do
         expect { player.update_choice(1) }.to change { player.instance_variable_get(:@pieces).first }.to(test_choice)
       end
     end
-
   end
 
   describe '#connected' do
