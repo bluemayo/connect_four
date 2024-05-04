@@ -37,19 +37,15 @@ class Board
   end
 
   def display_turn_order
-    update_choice(@player1.make_choice, 'X')
+    @player1.make_choice
     display_board
     return if game_won?
 
-    update_choice(@player2.make_choice, 'O')
+    @player2.make_choice
     display_board
   end
 
   def game_won?; end
-
-  def update_choice(choice, symbol)
-    @board[choice - 1] << symbol
-  end
 
   def display_board; end
 end

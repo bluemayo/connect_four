@@ -104,15 +104,10 @@ describe Board do
     context 'When both players have turns' do
       before do
         allow(test_player).to receive(:make_choice)
-        allow(game_order).to receive(:update_choice)
         allow(game_order).to receive(:game_won?).and_return(false)
       end
       it 'Calls #make_choice twice' do
         expect(test_player).to receive(:make_choice).twice
-        game_order.display_turn_order
-      end
-      it 'Calls #update_choice twice' do
-        expect(game_order).to receive(:update_choice).twice
         game_order.display_turn_order
       end
     end
@@ -120,30 +115,11 @@ describe Board do
     context 'When only player1 made choice' do
       before do
         allow(test_player).to receive(:make_choice).and_return(0)
-        allow(game_order).to receive(:update_choice)
         allow(game_order).to receive(:game_won?).and_return(true)
       end
       it 'Calls #make_choice once' do
         expect(test_player).to receive(:make_choice).once
         game_order.display_turn_order
-      end
-      it 'Calls #update_choice once' do
-        expect(game_order).to receive(:update_choice).once
-        game_order.display_turn_order
-      end
-    end
-  end
-
-  describe '#update_choice' do
-    # located inside #display_turn_order
-    # Command Method, test if state has been changed.
-    context 'When updating board' do
-      it 'Updates the correct column with correct symbol' do
-        expect { game.update_choice(1, 'X') }.to change { game.instance_variable_get(:@board).first.first }.to eq('X')
-      end
-      it 'Updates in the correct row with correct symbol' do
-        game.update_choice(1, 'X')
-        expect { game.update_choice(1, 'O') }.to change { game.instance_variable_get(:@board).first[1] }.to eq('O')
       end
     end
   end
