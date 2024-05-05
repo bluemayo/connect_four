@@ -73,9 +73,9 @@ describe Board do
     # located inside #play
     # Looping Script Method, behavior should be tested.
     # test for loop end condition: game_won?
-    context 'When game_won? is false once' do
+    context 'When game_end? is false once' do
       before do
-        allow(game).to receive(:game_won?).and_return(false, true)
+        allow(game).to receive(:game_end?).and_return(false, true)
       end
       it 'Calls #display_turn_order once' do
         expect(game).to receive(:display_turn_order).once
@@ -83,9 +83,9 @@ describe Board do
       end
     end
 
-    context 'When game_won? is false 4 times' do
+    context 'When game_end? is false 4 times' do
       before do
-        allow(game).to receive(:game_won?).and_return(false, false, false, false, true)
+        allow(game).to receive(:game_end?).and_return(false, false, false, false, true)
       end
       it 'Calls #display_turn_order 4 times' do
         expect(game).to receive(:display_turn_order).exactly(4).times
@@ -104,7 +104,7 @@ describe Board do
     context 'When both players have turns' do
       before do
         allow(test_player).to receive(:make_choice)
-        allow(game_order).to receive(:game_won?).and_return(false)
+        allow(test_player).to receive(:game_won?).and_return(false)
       end
       it 'Calls #make_choice twice' do
         expect(test_player).to receive(:make_choice).twice
@@ -115,7 +115,7 @@ describe Board do
     context 'When only player1 made choice' do
       before do
         allow(test_player).to receive(:make_choice).and_return(0)
-        allow(game_order).to receive(:game_won?).and_return(true)
+        allow(test_player).to receive(:game_won?).and_return(true)
       end
       it 'Calls #make_choice once' do
         expect(test_player).to receive(:make_choice).once

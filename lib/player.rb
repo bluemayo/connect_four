@@ -26,4 +26,6 @@ class Player
       piece.update_connected(each) if piece.connected?(each)
     end
   end
+
+  def game_won?; end
 end

@@ -22,7 +22,7 @@ class Board
   end
 
   def game_loop
-    display_turn_order until game_won?
+    display_turn_order until game_end?
   end
 
   # private
@@ -39,13 +39,13 @@ class Board
   def display_turn_order
     @player1.make_choice
     display_board
-    return if game_won?
+    return if @player1.game_won?
 
     @player2.make_choice
     display_board
   end
 
-  def game_won?; end
+  def game_end?; end
 
   def display_board; end
 end
