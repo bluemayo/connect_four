@@ -17,11 +17,11 @@ class Player
 
   def update_choice(choice)
     piece = Piece.new(choice)
-    connected(piece)
+    connect(piece)
     @pieces << piece
   end
 
-  def connected(piece)
+  def connect(piece)
     @pieces.each do |each|
       piece.update_connected(each) if piece.connected?(each)
     end

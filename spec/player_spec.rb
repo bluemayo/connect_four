@@ -22,8 +22,8 @@ describe Player do
         expect(Piece).to receive(:new).once
         player.update_choice(1)
       end
-      it 'Calls #connected once' do
-        expect(player).to receive(:connected).once
+      it 'Calls #connect once' do
+        expect(player).to receive(:connect).once
         player.update_choice(1)
       end
     end
@@ -31,7 +31,7 @@ describe Player do
       let(:test_choice) { double('piece') }
       before do
         allow(Piece).to receive(:new).with(1).and_return(test_choice)
-        allow(player).to receive(:connected)
+        allow(player).to receive(:connect)
       end
       it 'Updates @pieces' do
         expect { player.update_choice(1) }.to change { player.instance_variable_get(:@pieces).first }.to(test_choice)
@@ -39,23 +39,23 @@ describe Player do
     end
   end
 
-  describe '#connected' do
+  describe '#connect' do
     # located inside #update_choice
     # Outgoing Command Method, chech that message is sent
     context 'When looping over @pieces twice' do
       let(:test_piece) { double('piece') }
-      subject(:player_pieces) { described_class.new('mayo', [test_piece, test_piece] )}
+      subject(:player_pieces) { described_class.new('mayo', [test_piece, test_piece]) }
       before do
         allow(test_piece).to receive(:update_connected)
       end
-      it 'Calls Piece#is_connected? twice' do
+      it 'Calls Piece#connected? twice' do
         expect(test_piece).to receive(:connected?).twice
-        player_pieces.connected(test_piece)
+        player_pieces.connect(test_piece)
       end
       it 'Calls Piece#update_connected twice' do
         allow(test_piece).to receive(:connected?).and_return(true, true)
         expect(test_piece).to receive(:update_connected).twice
-        player_pieces.connected(test_piece)
+        player_pieces.connect(test_piece)
       end
     end
   end

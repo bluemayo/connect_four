@@ -11,7 +11,7 @@ CONNECTIONS = [
   [1, 1]
 ].freeze
 
-# defines a piece in a board of connect four, a node in a linked list
+# defines a piece in a board of connect four, a node in a doubly linked list
 class Piece
   @height = [0, 0, 0, 0, 0, 0, 0]
 
@@ -27,7 +27,19 @@ class Piece
     position
   end
 
-  def update_connected(piece); end
+  def update_connected(piece)
+    @connected << piece
+    piece.instance_variable_get(:@connected) << self
+  end
 
-  def connected?; end
+  def connected?(piece)
+    CONNECTIONS.each do |connection|
+      test = []
+      @position.each_with_index do |position, index|
+        test << (position + connection[index])
+      end
+      return true if test == piece.instance_variable_get(:@position)
+    end
+    false
+  end
 end
