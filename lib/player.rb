@@ -19,6 +19,7 @@ class Player
     piece = Piece.new(choice)
     connect(piece)
     @pieces << piece
+    @last = piece
   end
 
   def connect(piece)

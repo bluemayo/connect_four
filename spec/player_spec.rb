@@ -27,7 +27,7 @@ describe Player do
         player.update_choice(1)
       end
     end
-    context 'When updating Pieces' do
+    context 'When updating Piece' do
       let(:test_choice) { double('piece') }
       before do
         allow(Piece).to receive(:new).with(1).and_return(test_choice)
@@ -35,6 +35,9 @@ describe Player do
       end
       it 'Updates @pieces' do
         expect { player.update_choice(1) }.to change { player.instance_variable_get(:@pieces).first }.to(test_choice)
+      end
+      it 'Updates @last' do
+        expect { player.update_choice(1) }.to change { player.instance_variable_get(:@last) }.to(test_choice)
       end
     end
   end
