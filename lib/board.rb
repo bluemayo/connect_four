@@ -51,5 +51,7 @@ class Board
     @player2.game_won?
   end
 
-  def display_board; end
+  def display_board
+    puts ''
+  end
 end

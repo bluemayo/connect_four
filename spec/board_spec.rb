@@ -161,4 +161,9 @@ describe Board do
       end
     end
   end
+
+  describe '#display_board' do
+    # located inside #display_turn_order
+    # Method with only puts, no need for testing
+  end
 end

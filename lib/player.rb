@@ -33,6 +33,12 @@ class Player
     # Implement Depth-First Search in a doubly linked list of pieces with @last as root
     # A recursive method that returns true, using a method call stack
     # Base case: when stack length is > 4
-    @last.connect_four?
+    @last&.connect_four?
+  end
+
+  def pieces_position
+    @pieces.map do |piece|
+      piece.instance_variable_get(:@position)
+    end
   end
 end

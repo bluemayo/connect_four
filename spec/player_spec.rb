@@ -68,4 +68,18 @@ describe Player do
     # Script method that will activate DFS for checking win condition
     # Does not need testing, but recursive method inside will need testing.
   end
+
+  describe '#pieces_position' do
+    # located inside Board#display_turn_order
+    # Query Method, test that it returns an array containing positional arrays
+    context 'When the board is not fully occupied' do
+      let(:player1) { described_class.new('mayo') }
+      let(:piece) { instance_double(Piece) }
+      it 'Returns Array of arrays, with Array[0][0] ocupied' do
+        piece.instance_variable_set('@position', [0, 0])
+        player1.instance_variable_set('@pieces', [piece])
+        expect(player1.pieces_position).to eql([[0, 0]])
+      end
+    end
+  end
 end
