@@ -74,4 +74,75 @@ describe Piece do
       end
     end
   end
+
+  describe '#connect_four?' do
+    # located in Player#game_won?
+    # A recusive Query Method, test that return value is true if 4 pieces are connected
+    context 'When 4 pieces are connected vertically' do
+      let(:piece1) { described_class.new(1) }
+      let(:piece2) { described_class.new(1) }
+      let(:piece3) { described_class.new(1) }
+      let(:piece4) { described_class.new(1) }
+      before do
+        Piece.instance_variable_set('@height', [0, 0, 0, 0, 0, 0, 0])
+      end
+      it 'Returns true' do
+        piece1.update_connected(piece2)
+        piece2.update_connected(piece3)
+        piece3.update_connected(piece4)
+        expect(piece4.connect_four?).to eql(true)
+      end
+    end
+
+    context 'When 4 pieces are connected horizontally' do
+      let(:piece1) { described_class.new(1) }
+      let(:piece2) { described_class.new(2) }
+      let(:piece3) { described_class.new(3) }
+      let(:piece4) { described_class.new(4) }
+      before do
+        Piece.instance_variable_set('@height', [0, 0, 0, 0, 0, 0, 0])
+      end
+      it 'Returns true' do
+        piece1.update_connected(piece2)
+        piece2.update_connected(piece3)
+        piece3.update_connected(piece4)
+        expect(piece4.connect_four?).to eql(true)
+      end
+    end
+
+    context 'When 4 pieces are connected diagonally' do
+      let(:piece1) { described_class.new(1) }
+      let(:piece2) { described_class.new(2) }
+      let(:piece3) { described_class.new(3) }
+      let(:piece4) { described_class.new(4) }
+      before do
+        Piece.instance_variable_set('@height', [0, 1, 2, 3, 0, 0, 0])
+      end
+      it 'Returns true' do
+        piece1.update_connected(piece2)
+        piece2.update_connected(piece3)
+        piece3.update_connected(piece4)
+        expect(piece4.connect_four?).to eql(true)
+      end
+    end
+  end
+
+  describe '#calculate_direction' do
+    # located inside #connect_four?
+    # Query Method, test for correct return value
+    context 'When getting direction' do
+      subject(:direction) { described_class.new(1) }
+      let(:right_piece) { described_class.new(2) }
+      let(:up_piece) { described_class.new(1) }
+      before do
+        Piece.instance_variable_set('@height', [0, 0, 0, 0, 0, 0, 0])
+      end
+      it 'Returns [1, 0] when piece is connected to the right' do
+        expect(direction.calculate_direction(right_piece)).to eql([1, 0])
+      end
+      it 'Returns [0, 1] when piece is connected on top' do
+        expect(direction.calculate_direction(up_piece)).to eql([0, 1])
+      end
+    end
+  end
 end

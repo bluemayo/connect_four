@@ -45,7 +45,11 @@ class Board
     display_board
   end
 
-  def game_end?; end
+  def game_end?
+    return true if @player1.game_won?
+
+    @player2.game_won?
+  end
 
   def display_board; end
 end

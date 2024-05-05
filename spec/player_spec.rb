@@ -62,4 +62,10 @@ describe Player do
       end
     end
   end
+
+  describe '#game_won?' do
+    # located in Board#game_end?
+    # Script method that will activate DFS for checking win condition
+    # Does not need testing, but recursive method inside will need testing.
+  end
 end

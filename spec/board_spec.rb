@@ -123,4 +123,42 @@ describe Board do
       end
     end
   end
+
+  describe '#game_end?' do
+    # located in #game_loop
+    # Outgoing Command Method, test that messages are sent
+    # Test that it returns true if one of the players won
+    let(:player_end) { instance_double(Player) }
+    subject(:game_ending) { described_class.new(player_end, player_end) }
+    context 'When there is a winner' do
+      it 'Calls Player#game_won? twice when player2 wins' do
+        expect(player_end).to receive(:game_won?).twice
+        game_ending.game_end?
+      end
+      it 'Calls Player#game_won? once when player1 wins' do
+        allow(player_end).to receive(:game_won?).and_return(true)
+        expect(player_end).to receive(:game_won?).once
+        game_ending.game_end?
+      end
+      it 'Returns true when player2 wins' do
+        allow(player_end).to receive(:game_won?).and_return(false, true)
+        expect(game_ending.game_end?).to eql(true)
+      end
+      it 'Returns true when player1 wins' do
+        allow(player_end).to receive(:game_won?).and_return(true)
+        expect(game_ending.game_end?).to eql(true)
+      end
+    end
+
+    context 'When there are no winners' do
+      it 'Calls Player#game_won? twice' do
+        expect(player_end).to receive(:game_won?).twice
+        game_ending.game_end?
+      end
+      it 'Returns false' do
+        allow(player_end).to receive(:game_won?).and_return(false, false)
+        expect(game_ending.game_end?).to eql(false)
+      end
+    end
+  end
 end

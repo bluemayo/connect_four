@@ -7,6 +7,7 @@ class Player
   def initialize(name, pieces = [])
     @name = name
     @pieces = pieces
+    @last = nil
   end
 
   def make_choice
@@ -28,5 +29,10 @@ class Player
     end
   end
 
-  def game_won?; end
+  def game_won?
+    # Implement Depth-First Search in a doubly linked list of pieces with @last as root
+    # A recursive method that returns true, using a method call stack
+    # Base case: when stack length is > 4
+    @last.connect_four?
+  end
 end

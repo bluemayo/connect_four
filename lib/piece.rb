@@ -42,4 +42,26 @@ class Piece
     end
     false
   end
+
+  def connect_four?(connected_piece = self, count = 1, direction = nil)
+    return true if count == 4
+
+    connected_piece.instance_variable_get(:@connected).each do |piece|
+      new_direction = connected_piece.calculate_direction(piece)
+      if new_direction == direction
+        count += 1
+        return connect_four?(piece, count, direction)
+      end
+      return connect_four?(piece, count + 1, new_direction) if direction.nil?
+    end
+    false
+  end
+
+  def calculate_direction(connected_piece)
+    direction = []
+    @position.each_with_index do |position, index|
+      direction << (connected_piece.instance_variable_get(:@position)[index] - position)
+    end
+    direction
+  end
 end
