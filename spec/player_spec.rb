@@ -98,4 +98,34 @@ describe Player do
       end
     end
   end
+
+  describe '#verify_choice' do
+    # located in #make_choice
+    # Test that incorrect inputs get rejected
+    # Looping script with only gets and puts, no need for testing
+  end
+
+  describe '#valid?' do
+    # located in #verify_choice
+    # Query Method, test that valid inputs will return true false otherwise
+    context 'When input is valid' do
+      it 'Returns true' do
+        expect(player.valid?('4')).to eql(true)
+      end
+    end
+    context 'When input is invalid' do
+      it 'Returns false when input is not a numeral' do
+        expect(player.valid?('a')).to eql(false)
+      end
+
+      it 'Returns false when numeral input is not between 1-7' do
+        expect(player.valid?('9')).to eql(false)
+      end
+
+      it 'Returns false when column selected is full' do
+        allow(Piece).to receive(:instance_variable_get).and_return([6, 0, 0, 0, 0, 0, 0])
+        expect(player.valid?('1')).to eql(false)
+      end
+    end
+  end
 end

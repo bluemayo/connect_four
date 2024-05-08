@@ -12,8 +12,18 @@ class Player
 
   def make_choice
     print "#{@name}, please pick your row from 1-7: "
-    choice = gets.chomp.to_i
+    choice = verify_choice
     update_choice(choice)
+  end
+
+  def verify_choice
+    choice = gets.chomp
+    if valid?(choice)
+      choice.to_i
+    else
+      print "Invalid choice! #{@name}, please try again: "
+      verify_choice
+    end
   end
 
   def update_choice(choice)
@@ -45,5 +55,16 @@ class Player
 
   def number_of_pieces
     @pieces.length
+  end
+
+  def valid?(choice)
+    index = choice.to_i
+    if index < 8 && index.positive?
+      return false if Piece.instance_variable_get(:@height)[index - 1] == 6
+
+      true
+    else
+      false
+    end
   end
 end
