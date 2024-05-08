@@ -75,10 +75,26 @@ describe Player do
     context 'When the board is not fully occupied' do
       let(:player1) { described_class.new('mayo') }
       let(:piece) { instance_double(Piece) }
-      it 'Returns Array of arrays, with Array[0][0] ocupied' do
+      it 'Returns Array of arraysq' do
         piece.instance_variable_set('@position', [0, 0])
         player1.instance_variable_set('@pieces', [piece])
         expect(player1.pieces_position).to eql([[0, 0]])
+      end
+    end
+  end
+
+  describe '#number_of_pieces' do
+    # located inside Board#update_board
+    # Query Method, test for return value
+    context 'When @pieces is empty' do
+      it 'Returns 0' do
+        expect(player.number_of_pieces).to eql(0)
+      end
+    end
+    context 'When @pieces is not empty' do
+      subject(:pieces_player) { described_class.new('mayo', [0, 1, 2, 3]) }
+      it 'Returns 4' do
+        expect(pieces_player.number_of_pieces).to eql(4)
       end
     end
   end

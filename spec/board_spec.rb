@@ -105,6 +105,7 @@ describe Board do
       before do
         allow(test_player).to receive(:make_choice)
         allow(test_player).to receive(:game_won?).and_return(false)
+        allow(game_order).to receive(:update_board)
       end
       it 'Calls #make_choice twice' do
         expect(test_player).to receive(:make_choice).twice
@@ -116,6 +117,7 @@ describe Board do
       before do
         allow(test_player).to receive(:make_choice).and_return(0)
         allow(test_player).to receive(:game_won?).and_return(true)
+        allow(game_order).to receive(:update_board)
       end
       it 'Calls #make_choice once' do
         expect(test_player).to receive(:make_choice).once
@@ -163,7 +165,31 @@ describe Board do
   end
 
   describe '#display_board' do
-    # located inside #display_turn_order
+    # located inside #update_board
     # Method with only puts, no need for testing
+  end
+
+  describe '#update_board' do
+    # located inside #display_turn_order
+    # Command Method, test for change in state
+    let(:board_player) { double('player') }
+    let(:last_piece) { double('piece') }
+    subject(:updated_board) { described_class.new(board_player, board_player) }
+    context "When updating Player1's choice" do
+      it "Updates @board[0][0] to 'X'" do
+        allow(board_player).to receive(:instance_variable_get).with(:@last).and_return(last_piece)
+        allow(board_player).to receive(:number_of_pieces).and_return(1, 0)
+        allow(last_piece).to receive(:instance_variable_get).and_return([0, 0], nil)
+        expect { updated_board.update_board }.to change { updated_board.instance_variable_get(:@board)[0][0] }.to('X')
+      end
+    end
+    context "When updating Player2's choice" do
+      it "Updates @board[0][1] to 'O'" do
+        allow(board_player).to receive(:instance_variable_get).with(:@last).and_return(last_piece)
+        allow(board_player).to receive(:number_of_pieces).and_return(1, 1)
+        allow(last_piece).to receive(:instance_variable_get).and_return([0, 1])
+        expect { updated_board.update_board }.to change { updated_board.instance_variable_get(:@board)[0][1] }.to('O')
+      end
+    end
   end
 end

@@ -21,6 +21,7 @@ class Player
     connect(piece)
     @pieces << piece
     @last = piece
+    p @last
   end
 
   def connect(piece)
@@ -40,5 +41,9 @@ class Player
     @pieces.map do |piece|
       piece.instance_variable_get(:@position)
     end
+  end
+
+  def number_of_pieces
+    @pieces.length
   end
 end
