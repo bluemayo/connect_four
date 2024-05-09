@@ -11,8 +11,10 @@ class Board
   end
 
   def play
+    introduction
     update_players
     game_loop
+    display_winner
   end
 
   def update_players
@@ -71,5 +73,19 @@ class Board
     puts "|#{@board[0][1]}|#{@board[1][1]}|#{@board[2][1]}|#{@board[3][1]}|#{@board[4][1]}|#{@board[5][1]}|#{@board[6][1]}|"
     puts "|#{@board[0][0]}|#{@board[1][0]}|#{@board[2][0]}|#{@board[3][0]}|#{@board[4][0]}|#{@board[5][0]}|#{@board[6][0]}|"
     puts '+-+-+-+-+-+-+-+'
+  end
+
+  def introduction
+    puts ''
+    puts "Let's play a game of Connect Four!"
+    puts 'Whose playing?'
+  end
+
+  def display_winner
+    if @player1.number_of_pieces > @player2.number_of_pieces
+      puts "#{@player1.instance_variable_get(:@name)} won!"
+    else
+      puts "#{@player2.instance_variable_get(:@name)} won!"
+    end
   end
 end

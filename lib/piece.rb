@@ -43,17 +43,19 @@ class Piece
     false
   end
 
-  def connect_four?(hash = Hash.new(1), connected_piece = self, direction = nil)
+  def connect_four?(hash = Hash.new(1), connected_piece = self, direction = nil, previous = nil) # rubocop: disable Metrics
     hash.each_value do |count|
       return true if count == 4
     end
 
     connected_piece.instance_variable_get(:@connected).each do |piece|
+      break if piece == previous
+
       new_direction = direction_hash(connected_piece.calculate_direction(piece))
       hash[new_direction] += 1
-      return connect_four?(hash, piece, direction) if new_direction == direction
+      return connect_four?(hash, piece, direction, connected_piece) if new_direction == direction
 
-      return connect_four?(hash, piece, new_direction) if direction.nil?
+      return connect_four?(hash, piece, new_direction, connected_piece) if direction.nil?
     end
     false
   end

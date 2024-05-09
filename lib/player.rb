@@ -31,7 +31,6 @@ class Player
     connect(piece)
     @pieces << piece
     @last = piece
-    p @last
   end
 
   def connect(piece)
@@ -41,9 +40,6 @@ class Player
   end
 
   def game_won?
-    # Implement Depth-First Search in a doubly linked list of pieces with @last as root
-    # A recursive method that returns true, using a method call stack
-    # Base case: when stack length is > 4
     @last&.connect_four?
   end
 
